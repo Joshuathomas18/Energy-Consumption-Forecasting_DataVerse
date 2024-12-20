@@ -109,6 +109,12 @@ plt.grid()
 plt.show()
 </pre>
 
+![Alt text](relative/path/to/image.png)
+
+
+![Alt text](relative/path/to/image.png)
+
+
 ## Step 4: Prepare Data for LSTM
 
 Scale the data and create sliding window sequences for time-series prediction.Z
