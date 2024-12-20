@@ -262,6 +262,8 @@ print("Predictions saved to energy_forecast.csv")
 </code>
 </pre>
 
+![Alt text](g3.png)
+
 ## Step 7: Save Predictions
 
 Save the actual and predicted values to a CSV file for further analysis.
@@ -328,6 +330,8 @@ print(f"RMSE: {rmse}")
 
 </code>
 </pre>
+
+![Alt text](g2.png)
 
 
 
