@@ -334,6 +334,8 @@ print(f"RMSE: {rmse}")
 
 ![Alt text](ss.png)
 
+**THIS VALUE INDICATES IT IS A RELIABLE AND ACCURATE MODEL**
+
 
 
 
