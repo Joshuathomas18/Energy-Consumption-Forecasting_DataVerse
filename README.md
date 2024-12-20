@@ -1,20 +1,24 @@
-# Energy-Consumption-Forecasting_DataVerse
+# Energy_Consumption_Forecasting_DataVerse
 
 This project demonstrates how to preprocess energy consumption data, engineer features, and use a Long Short-Term Memory (LSTM) model to predict energy consumption. LSTM is a type of recurrent neural network (RNN) well-suited for sequence prediction tasks because it can retain long-term dependencies in data. This capability makes it ideal for time-series forecasting problems like energy consumption.
 
-# Why LSTM?
+![Alt text](g2.png)
+
+## Why LSTM?
 
 LSTMs use a specialized gating mechanism to learn the importance of previous time steps while training. This architecture avoids issues like vanishing gradients that often affect standard RNNs. By leveraging LSTMs, we can capture temporal patterns in energy usage effectively, leading to more accurate predictions.
 
-# Evaluation Metrics
+![Alt text](g2.png)
+
+## Evaluation Metrics
 
 To gauge the performance of the model, we employ metrics like:
 
 **Mean Absolute Percentage Error (MAPE**): Measures the accuracy of predictions as a percentage, providing a normalized error metric. This helps in understanding forecast accuracy regardless of the scale.
 
-Feature Engineering and Model Design
+![Alt text](g2.png)
 
-In addition to utilizing temporal features like hour, day, and month, this project can be extended by incorporating external factors, such as weather data, to improve forecast precision. Advanced forecasting models, such as LSTM and ARIMA, further enhance prediction capabilities by modeling both short- and long-term patterns.
+
 
 Below, you'll find step-by-step instructions and explanations for each part of the process, complete with code snippets.
 
@@ -215,22 +219,46 @@ Evaluate the model's performance on the test set and visualize the results.
 <pre>
 <strong style="background-color:#2d2d2d; color:#ffffff; padding: 8px; border-radius: 6px;">📄 main.py</strong>
 <code>
-# Evaluate model
-model.eval()
-with torch.no_grad():
-    predictions = model(X_test_tensor).numpy()
-    predictions = scaler.inverse_transform(predictions)
-    y_test_actual = scaler.inverse_transform(y_test_tensor.numpy())
+import torch
+from torch.utils.data import DataLoader, TensorDataset
+import numpy as np
 
-# Plot results
-plt.figure(figsize=(10, 5))
-plt.plot(y_test_actual[:100], label="Actual")
-plt.plot(predictions[:100], label="Predicted")
-plt.legend()
-plt.title("Energy Consumption Forecasting")
-plt.xlabel("Time")
-plt.ylabel("Global Active Power (kW)")
-plt.show()
+# Move model and data to GPU (if available)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = model.to(device)
+X_test_tensor = X_test_tensor.to(device)
+
+# Create a DataLoader for batching
+test_dataset = TensorDataset(X_test_tensor)
+test_loader = DataLoader(test_dataset, batch_size=32)
+
+# Evaluate model in batches
+predictions = []
+with torch.no_grad():
+    for batch in test_loader:
+        batch = batch[0]  # Extract batch
+        batch_preds = model(batch).cpu().numpy()  # Move predictions back to CPU
+        predictions.append(batch_preds)
+
+# Combine all predictions
+predictions = np.concatenate(predictions, axis=0)
+
+# Inverse transform predictions
+predictions = scaler.inverse_transform(predictions)
+
+</code>
+</pre>
+
+## Step 7 : Visualization
+
+This graph should the predicted vs actual difference of the energy consumption.
+
+<pre>
+<strong style="background-color:#2d2d2d; color:#ffffff; padding: 8px; border-radius: 6px;">📄 main.py</strong>
+<code>
+predicted_data = pd.DataFrame({"Actual": y_test_actual.flatten(), "Predicted": predictions.flatten()})
+predicted_data.to_csv("energy_forecast.csv", index=False)
+print("Predictions saved to energy_forecast.csv")
 </code>
 </pre>
 
@@ -241,9 +269,45 @@ Save the actual and predicted values to a CSV file for further analysis.
 <pre>
 <strong style="background-color:#2d2d2d; color:#ffffff; padding: 8px; border-radius: 6px;">📄 main.py</strong>
 <code>
-predicted_data = pd.DataFrame({"Actual": y_test_actual.flatten(), "Predicted": predictions.flatten()})
-predicted_data.to_csv("energy_forecast.csv", index=False)
-print("Predictions saved to energy_forecast.csv")
+# Define the device
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)  # Move the model to the appropriate device
+
+# Evaluate model
+model.eval()
+batch_size = 100
+num_batches = len(X_test_tensor) // batch_size
+
+actual_values = []
+predicted_values = []
+
+with torch.no_grad():
+    for i in range(num_batches):
+        # Move input batch to the same device as the model
+        X_batch = X_test_tensor[i * batch_size:(i + 1) * batch_size].to(device)
+        y_batch = y_test_tensor[i * batch_size:(i + 1) * batch_size].to(device)
+
+        # Predict and scale back
+        predictions_batch = model(X_batch).cpu().numpy()  # Move output to CPU for NumPy conversion
+        predictions_batch = scaler.inverse_transform(predictions_batch)
+        actual_batch = scaler.inverse_transform(y_batch.cpu().numpy())  # Move target to CPU for scaling back
+
+        actual_values.extend(actual_batch)
+        predicted_values.extend(predictions_batch)
+
+# Convert lists back to numpy arrays
+actual_values = np.array(actual_values)
+predicted_values = np.array(predicted_values)
+
+# Plot results (Subset to the first 100 samples for visualization)
+plt.figure(figsize=(10, 5))
+plt.plot(actual_values[:100], label="Actual")
+plt.plot(predicted_values[:100], label="Predicted")
+plt.legend()
+plt.title("Energy Consumption Forecasting")
+plt.xlabel("Time")
+plt.ylabel("Global Active Power (kW)")
+plt.show()
 </code>
 </pre>
 
@@ -255,12 +319,12 @@ Calculate the RMSE score and analyze prediction errors.
 <pre>
 <strong style="background-color:#2d2d2d; color:#ffffff; padding: 8px; border-radius: 6px;">📄 main.py</strong>
 <code>
-import numpy as np
 from sklearn.metrics import mean_squared_error
+import numpy as np
 
 # Calculate RMSE
-score = np.sqrt(mean_squared_error(test['PJME_MW'], test['prediction']))
-print(f'RMSE Score on Test set: {score:0.2f}')
+rmse = np.sqrt(mean_squared_error(actual_values, predicted_values))
+print(f"RMSE: {rmse}")
 
 </code>
 </pre>
