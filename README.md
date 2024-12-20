@@ -2,13 +2,13 @@
 
 This project demonstrates how to preprocess energy consumption data, engineer features, and use a Long Short-Term Memory (LSTM) model to predict energy consumption. LSTM is a type of recurrent neural network (RNN) well-suited for sequence prediction tasks because it can retain long-term dependencies in data. This capability makes it ideal for time-series forecasting problems like energy consumption.
 
-![Alt text](g2.png)
+![Alt text](intro.jpg)
 
 ## Why LSTM?
 
 LSTMs use a specialized gating mechanism to learn the importance of previous time steps while training. This architecture avoids issues like vanishing gradients that often affect standard RNNs. By leveraging LSTMs, we can capture temporal patterns in energy usage effectively, leading to more accurate predictions.
 
-![Alt text](g2.png)
+![Alt text](LSTM.jpg)
 
 ## Evaluation Metrics
 
