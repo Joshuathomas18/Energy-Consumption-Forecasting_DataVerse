@@ -330,7 +330,7 @@ print(f"RMSE: {rmse}")
 
 </code>
 </pre>
-![Alt Text for Screenshot](path/to/screenshot.png)
+![Alt Text ](Screenshot 2024-12-20 213321.png)
 
 
 
