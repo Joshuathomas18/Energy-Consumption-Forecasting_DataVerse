@@ -331,7 +331,7 @@ print(f"RMSE: {rmse}")
 </code>
 </pre>
 
-![Alt text](g2.png)
+
 
 
 
