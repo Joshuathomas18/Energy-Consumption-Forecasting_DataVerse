@@ -16,7 +16,7 @@ To gauge the performance of the model, we employ metrics like:
 
 **Mean Absolute Percentage Error (MAPE**): Measures the accuracy of predictions as a percentage, providing a normalized error metric. This helps in understanding forecast accuracy regardless of the scale.
 
-![Alt text](g2.png)
+![Alt text](rmse.png)
 
 
 
@@ -330,6 +330,7 @@ print(f"RMSE: {rmse}")
 
 </code>
 </pre>
+![Alt Text for Screenshot](path/to/screenshot.png)
 
 
 
