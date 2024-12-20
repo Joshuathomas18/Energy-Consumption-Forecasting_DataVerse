@@ -248,6 +248,24 @@ print("Predictions saved to energy_forecast.csv")
 </pre>
 
 
+## Step 8 : RMSE and Error Analysis
+
+Calculate the RMSE score and analyze prediction errors.
+
+<pre>
+<strong style="background-color:#2d2d2d; color:#ffffff; padding: 8px; border-radius: 6px;">📄 main.py</strong>
+<code>
+import numpy as np
+from sklearn.metrics import mean_squared_error
+
+# Calculate RMSE
+score = np.sqrt(mean_squared_error(test['PJME_MW'], test['prediction']))
+print(f'RMSE Score on Test set: {score:0.2f}')
+
+</code>
+</pre>
+
+
 
 
 
