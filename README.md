@@ -109,10 +109,10 @@ plt.grid()
 plt.show()
 </pre>
 
-![Alt text](relative/path/to/image.png)
+![Alt text](g1.png)
 
 
-![Alt text](relative/path/to/image.png)
+![Alt text](g2.png)
 
 
 ## Step 4: Prepare Data for LSTM
