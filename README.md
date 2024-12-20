@@ -4,13 +4,13 @@ This project demonstrates how to preprocess energy consumption data, engineer fe
 
 ![Alt text](intro.jpg)
 
-## Why LSTM?
+# Why LSTM?
 
 LSTMs use a specialized gating mechanism to learn the importance of previous time steps while training. This architecture avoids issues like vanishing gradients that often affect standard RNNs. By leveraging LSTMs, we can capture temporal patterns in energy usage effectively, leading to more accurate predictions.
 
 ![Alt text](LSTM.png)
 
-## Evaluation Metrics
+# Evaluation Metrics
 
 To gauge the performance of the model, we employ metrics like:
 
@@ -330,9 +330,8 @@ print(f"RMSE: {rmse}")
 
 </code>
 </pre>
-![Alt Text ](Screenshot 2024-12-20 213321.png)
 
-
+![Alt text](ss.png)
 
 
 
