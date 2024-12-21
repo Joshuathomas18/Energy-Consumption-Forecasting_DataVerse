@@ -276,7 +276,9 @@ Save the actual and predicted values to a CSV file for further analysis.
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)  # Move the model to the appropriate device
 
-# Evaluate model
+energy_forecast.csv
+
+## Evaluate model
 model.eval()
 batch_size = 100
 num_batches = len(X_test_tensor) // batch_size
