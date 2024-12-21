@@ -263,7 +263,7 @@ print("Predictions saved to energy_forecast.csv")
 </code>
 </pre>
 
-![Alt text](g3.png)
+
 
 ## Step 7: Save Predictions
 
@@ -313,6 +313,8 @@ plt.ylabel("Global Active Power (kW)")
 plt.show()
 </code>
 </pre>
+
+![Alt text](g3.png)
 
 
 ## Step 8 : RMSE and Error Analysis
